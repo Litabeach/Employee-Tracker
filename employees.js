@@ -25,6 +25,7 @@ connection.connect(function(err) {
 
 // SELECT name, title from tvshow LEFT JOIN tvcharacter ON tvcharacter.showid = tvshow.showid WHERE genre = "Drama";
 
+//view all employees with sql, show results in a table
 function viewEmployees() {
   let sql = "SELECT * FROM employees_db.employee LEFT JOIN role on role.id = employee.id ";
   connection.query(sql, function(err, res) {
@@ -33,8 +34,8 @@ function viewEmployees() {
   });
 }
 
-function viewEmployeesDept() {
-  let sql = "SELECT * FROM employees_db.employee";
+function viewSales() {
+  let sql = "SELECT first_name, last_name, title FROM role LEFT JOIN employee ON employee.role_id = role.id WHERE department_id = 1";
   connection.query(sql, function(err, res) {
     if (err) throw err;
     console.table(res);
@@ -43,4 +44,6 @@ function viewEmployeesDept() {
 
 module.exports = {
   viewEmployees,
-  viewEmployeesDept }
+  viewSales
+}
+

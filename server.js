@@ -2,7 +2,6 @@ const inquirer = require("inquirer");
 const employees = require("./employees");
 
 
-
 //initial question with selections for user
 function promptChoices() {
     return inquirer
@@ -15,18 +14,17 @@ function promptChoices() {
             },
         ]).then(function (response) {
             //run a unique function depending on the response
-            if (response.choices  == 'Add Employee')
-            addEmployee();
+            if (response.choices == 'Add Employee')
+                addEmployee();
             else if (response.choices == 'View All Employees')
-            employees.viewEmployees();
+                employees.viewEmployees();
+            else if (response.choices == 'View All Employees By Department')
+                selectDepartment();
         })
 
 }
 
-// function viewEmployees() {
-
-// }
-
+//inquirer questions to add an employee
 function addEmployee() {
     return inquirer
         .prompt([
@@ -54,14 +52,29 @@ function addEmployee() {
         ])
 };
 
+function selectDepartment() {
+    return inquirer
+        .prompt([
+            {
+                type: 'list',
+                name: 'department',
+                message: "Which department would you like to view?",
+                choices: ['sales', 'engineering', 'finance', 'legal']
+
+            },
+        ]).then(function (response) {
+            //run a unique function depending on the response
+            if (response.choices == 'sales')
+                employees.viewSales()
+            // else if (response.choices == 'engineering')
+            // employees.viewEngineers()
+            // else if (response.choices == 'finance')
+            // employees.viewFinance()
+            // else if (response.choices == 'legal')
+            // employees.viewLegal()
+        })
+};
+
 
 promptChoices()
 
-//department qu's
-// {
-//     type: 'input',
-//     name: 'department',
-//     message: "What is the employees department?",
-//     choices: ['sales', 'engineering', 'finance', 'legal']
-
-// },
