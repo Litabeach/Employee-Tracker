@@ -1,7 +1,7 @@
 const inquirer = require("inquirer");
 
 
-
+//initial question with selections for user
 function promptChoices() {
     return inquirer
         .prompt([
@@ -12,15 +12,15 @@ function promptChoices() {
                 choices: ['View All Employees', 'View All Employees By Department', 'View All Employees By Manager', 'Add Employee', 'Remove Employee', 'Update Employee Role', 'Update Manager Role']
             },
         ]).then(function (response) {
+            //run a unique function depending on the response
             if (response.choices  == 'Add Employee')
             addEmployee();
         })
 
 }
+// function viewEmployees() {
 
-promptChoices()
-// if choices == 'Add Employee'
-// addEmployee()
+// }
 
 function addEmployee() {
     return inquirer
@@ -43,8 +43,20 @@ function addEmployee() {
                 type: 'input',
                 name: 'role',
                 message: "What is the employees role?",
-                choices: ['sales', 'engineering', 'finance', 'legal']
+                choices: ['lead engineer', 'software engineer', 'accountant', 'legal team aid', 'sales lead', 'lawyer', 'salesperson']
 
             },
         ])
 };
+
+
+promptChoices()
+
+//department qu's
+// {
+//     type: 'input',
+//     name: 'department',
+//     message: "What is the employees department?",
+//     choices: ['sales', 'engineering', 'finance', 'legal']
+
+// },
