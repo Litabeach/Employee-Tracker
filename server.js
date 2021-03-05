@@ -1,4 +1,6 @@
 const inquirer = require("inquirer");
+const employees = require("./employees");
+
 
 
 //initial question with selections for user
@@ -15,9 +17,12 @@ function promptChoices() {
             //run a unique function depending on the response
             if (response.choices  == 'Add Employee')
             addEmployee();
+            else if (response.choices == 'View All Employees')
+            employees.viewEmployees();
         })
 
 }
+
 // function viewEmployees() {
 
 // }
