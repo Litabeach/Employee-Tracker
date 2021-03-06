@@ -1,18 +1,10 @@
-var mysql = require("mysql");
+const main = require("./main");
+const connection = require("./connection");
+// const cTable = require('console.table');
 
-var connection = mysql.createConnection({
-  host: "localhost",
-
-  // Your port; if not 3306
-  port: 3306,
-
-  // Your username
-  user: "root",
-
-  // Your password
-  password: "",
-  database: "employees_db"
-});
+// console.log(promptChoices.promptChoices)
+// console.log(main)
+// console.log(main.test)
 
 
 connection.connect(function(err) {
@@ -21,29 +13,59 @@ connection.connect(function(err) {
 });
 
 
-// SELECT name, quote, network FROM tvcharacter INNER JOIN tvshow ON tvcharacter.showid = tvshow.showid
-
-// SELECT name, title from tvshow LEFT JOIN tvcharacter ON tvcharacter.showid = tvshow.showid WHERE genre = "Drama";
-
 //view all employees with sql, show results in a table
 function viewEmployees() {
   let sql = "SELECT * FROM employees_db.employee LEFT JOIN role on role.id = employee.id ";
   connection.query(sql, function(err, res) {
     if (err) throw err;
     console.table(res);
+    // main.init();
   });
 }
 
+//view full name and title of people in sales dept
 function viewSales() {
   let sql = "SELECT first_name, last_name, title FROM role LEFT JOIN employee ON employee.role_id = role.id WHERE department_id = 1";
   connection.query(sql, function(err, res) {
     if (err) throw err;
     console.table(res);
+    // main.promptChoices();
   });
-}
+} 
+
+//view full name and title of people in sales dept
+function viewEngineers() {
+  let sql = "SELECT first_name, last_name, title FROM role LEFT JOIN employee ON employee.role_id = role.id WHERE department_id = 2";
+  connection.query(sql, function(err, res) {
+    if (err) throw err;
+    console.table(res);
+    // main.promptChoices();
+  });
+} 
+
+function viewFinance() {
+  let sql = "SELECT first_name, last_name, title FROM role LEFT JOIN employee ON employee.role_id = role.id WHERE department_id = 3";
+  connection.query(sql, function(err, res) {
+    if (err) throw err;
+    console.table(res);
+    // main.promptChoices();
+  });
+} 
+
+function viewLegal() {
+  let sql = "SELECT first_name, last_name, title FROM role LEFT JOIN employee ON employee.role_id = role.id WHERE department_id = 4";
+  connection.query(sql, function(err, res) {
+    if (err) throw err;
+    console.table(res);
+    // main.promptChoices();
+  });
+} 
 
 module.exports = {
   viewEmployees,
-  viewSales
+  viewSales,
+  viewEngineers,
+  viewFinance,
+  viewLegal
 }
 

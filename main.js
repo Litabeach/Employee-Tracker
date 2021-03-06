@@ -1,8 +1,12 @@
 const inquirer = require("inquirer");
 const employees = require("./employees");
+// const promptChoices = require("./promptChoices")
 
+// function init(){
+//     promptChoices();
+// }
 
-//initial question with selections for user
+// initial question with selections for user
 function promptChoices() {
     return inquirer
         .prompt([
@@ -16,15 +20,16 @@ function promptChoices() {
             //run a unique function depending on the response
             if (response.choices == 'Add Employee')
                 addEmployee();
-            else if (response.choices == 'View All Employees')
+            else if (response.choices == 'View All Employees'){
                 employees.viewEmployees();
-            else if (response.choices == 'View All Employees By Department')
+            }
+            else if (response.choices == 'View All Employees By Department'){
                 selectDepartment();
+            }
         })
-
 }
 
-//inquirer questions to add an employee
+// inquirer questions to add an employee
 function addEmployee() {
     return inquirer
         .prompt([
@@ -43,7 +48,7 @@ function addEmployee() {
             },
 
             {
-                type: 'input',
+                type: 'list',
                 name: 'role',
                 message: "What is the employees role?",
                 choices: ['lead engineer', 'software engineer', 'accountant', 'legal team aid', 'sales lead', 'lawyer', 'salesperson']
@@ -52,6 +57,7 @@ function addEmployee() {
         ])
 };
 
+//select department
 function selectDepartment() {
     return inquirer
         .prompt([
@@ -64,17 +70,25 @@ function selectDepartment() {
             },
         ]).then(function (response) {
             //run a unique function depending on the response
-            if (response.choices == 'sales')
+            if (response.department == 'sales'){
                 employees.viewSales()
-            // else if (response.choices == 'engineering')
-            // employees.viewEngineers()
-            // else if (response.choices == 'finance')
-            // employees.viewFinance()
-            // else if (response.choices == 'legal')
-            // employees.viewLegal()
-        })
+            }
+            else if (response.department == 'engineering'){
+            employees.viewEngineers()
+            }
+            else if (response.department == 'finance'){
+            employees.viewFinance()
+            }
+            else if (response.department == 'legal'){
+            employees.viewLegal()
+            }
+        }) 
 };
 
+// init();
+promptChoices();
 
-promptChoices()
-
+module.exports = {
+    promptChoices,
+    // init
+}
