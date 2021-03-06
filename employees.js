@@ -61,11 +61,42 @@ function viewLegal() {
   });
 } 
 
+function viewPeterson(){
+  let sql = "SELECT first_name, last_name, title FROM role LEFT JOIN employee ON employee.role_id = role.id WHERE manager_id = 'Sarah Peterson'";
+  connection.query(sql, function(err, res) {
+    if (err) throw err;
+    console.table(res);
+    // main.promptChoices();
+  });
+}
+
+function viewXiong(){
+  let sql = "SELECT first_name, last_name, title FROM role LEFT JOIN employee ON employee.role_id = role.id WHERE manager_id = 'Gao Xiong'";
+  connection.query(sql, function(err, res) {
+    if (err) throw err;
+    console.table(res);
+    // main.promptChoices();
+  });
+}
+
+function viewLamb(){
+  let sql = "SELECT first_name, last_name, title FROM role LEFT JOIN employee ON employee.role_id = role.id WHERE manager_id = 'Joe Lamb'";
+  connection.query(sql, function(err, res) {
+    if (err) throw err;
+    console.table(res);
+    // main.promptChoices();
+  });
+}
+
+
 module.exports = {
   viewEmployees,
   viewSales,
   viewEngineers,
   viewFinance,
-  viewLegal
+  viewLegal,
+  viewPeterson,
+  viewXiong,
+  viewLamb
 }
 
