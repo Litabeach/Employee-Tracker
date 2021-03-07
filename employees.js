@@ -1,8 +1,9 @@
 const main = require("./main");
 const connection = require("./connection");
+//  m
 // const cTable = require('console.table');
 
-// console.log(promptChoices.promptChoices)
+// console.log(main.init())
 // console.log(main)
 // console.log(main.test)
 
@@ -19,7 +20,7 @@ function viewEmployees() {
   connection.query(sql, function(err, res) {
     if (err) throw err;
     console.table(res);
-    // main.init();
+    // main.promptChoices();
   });
 }
 
@@ -88,6 +89,24 @@ function viewLamb(){
   });
 }
 
+function createEmployee() {
+console.log("Creating a new employee...\n");
+var query = connection.query(
+  "INSERT INTO employee SET ?",
+  {
+    title: response.firstName,
+    artist: response.lastName,
+    genre: role
+  },
+  function(err, res) {
+    if (err) throw err;
+    console.log(res.affectedRows + " song inserted!\n");
+    // Call updateProduct AFTER the INSERT completes
+    // updateSong();
+  }
+);
+}
+
 
 module.exports = {
   viewEmployees,
@@ -97,6 +116,6 @@ module.exports = {
   viewLegal,
   viewPeterson,
   viewXiong,
-  viewLamb
+  viewLamb,
+  createEmployee
 }
-

@@ -1,11 +1,14 @@
 const inquirer = require("inquirer");
 const employees = require("./employees");
 const questions = require("./questions");
-// const promptChoices = require("./promptChoices")
+// const firstQuestion = require("./firstQuestion");
 
-// function init(){
-//     promptChoices();
-// }
+// const promptChoices = require("./promptChoices")
+// questions.promptChoices()
+
+function init(){
+    promptChoices()
+}
 
 // initial question with selections for user
 function promptChoices() {
@@ -34,11 +37,13 @@ function promptChoices() {
         })
 }
 
+init();
 
-// init();
-promptChoices();
+// promptChoices();
 
 module.exports = {
-    promptChoices,
     // init
+    promptChoices
 }
+
+

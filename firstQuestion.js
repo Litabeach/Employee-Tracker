@@ -1,6 +1,8 @@
 const inquirer = require("inquirer");
 const employees = require("./employees");
+const questions = require("./questions");
 
+// initial question with selections for user
 function promptChoices() {
     return inquirer
         .prompt([
@@ -12,18 +14,19 @@ function promptChoices() {
             },
         ]).then(function (response) {
             //run a unique function depending on the response
-            if (response.choices == 'Add Employee'){
-                addEmployee();
-            }
+            if (response.choices == 'Add Employee')
+               questions.addEmployee();
             else if (response.choices == 'View All Employees'){
                 employees.viewEmployees();
             }
             else if (response.choices == 'View All Employees By Department'){
-                console.log("select dept")
-                selectDepartment();
+                questions.selectDepartment();
+            }
+
+            else if (response.choices == 'View All Employees By Manager'){
+                questions.viewByManager();
             }
         })
-
 }
 
 
