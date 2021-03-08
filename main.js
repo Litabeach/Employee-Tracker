@@ -9,6 +9,11 @@ const questions = require("./questions");
 function init(){
     promptChoices()
 }
+// const firstQuestion = promptChoices();
+
+// function init(){
+//     firstQuestion
+// }
 
 // initial question with selections for user
 function promptChoices() {
@@ -56,6 +61,7 @@ init();
 
 module.exports = {
     init,
+    // firstQuestion,
     promptChoices
 }
 

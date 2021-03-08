@@ -2,6 +2,7 @@ const inquirer = require("inquirer");
 const employees = require("./employees");
 const connection = require("./connection");
 const main = require("./main");
+const cTable = require('console.table');
 
 // inquirer questions to add an employee and sql logic to include that employee in the db
 function addEmployee() {
@@ -186,5 +187,6 @@ module.exports = {
                 addEmployee,
                 removeEmployee,
                 selectDepartment,
-                viewByManager
+                viewByManager,
+                updateEmployeeRole
             }

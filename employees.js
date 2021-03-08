@@ -1,6 +1,6 @@
 const main = require("./main");
 const connection = require("./connection");
-// const cTable = require('console.table');
+const cTable = require('console.table');
 
 // console.log(main.init())
 // console.log(main)
@@ -15,11 +15,11 @@ connection.connect(function(err) {
 
 //view all employees with sql, show results in a table
 function viewEmployees() {
-  let sql = "SELECT * FROM employees_db.employee LEFT JOIN role on role.id = employee.role_id ";
+  let sql = "SELECT employee.id, first_name, last_name, title, salary, department, manager FROM employees_db.employee INNER JOIN role on role.id = employee.role_id INNER JOIN department on department.id = role.department_id;";
   connection.query(sql, function(err, res) {
     if (err) throw err;
     console.table(res);
-    // main.promptChoices();
+    // main.firstQuestion
   });
 }
 
