@@ -147,13 +147,14 @@ function selectDepartment() {
 };
 
 function updateEmployeeRole() {
+     // var employeeList = employees.getEmployees()
     return inquirer
         .prompt([
             {
                 type: 'list',
                 name: 'selectEmployee',
                 message: "Which employee would you like to update?",
-                choices: ['names of all employees from connection.query pulled using a msql statement?']
+                choices: ['names of all employees from connection.query pulled using a msql statement? Use employees.getEmployees()?']
             },
 
             {
@@ -167,6 +168,7 @@ function updateEmployeeRole() {
             console.log("Updating employee role...\n");
             connection.query(
                 "UPDATE employee SET ? WHERE ??",
+                //use employee ID for WHERE instead of first/last name? pulled from mySQL statement. console names to user, use ID for where statement.
                 [
                     {
                         role_id: response.updateRole
@@ -190,13 +192,14 @@ function updateEmployeeRole() {
 
 
     function updateManager() {
+        // var employeeList = employees.getEmployees()
         return inquirer
             .prompt([
                 {
                     type: 'list',
                     name: 'employee',
                     message: "Which employee's manager would you like to update?",
-                    choices: ['names of all employees from connection.query pulled using a msql statement?']
+                    choices: ['names of all employees from connection.query pulled using a msql statement? Use employees.getEmployees()?']
                 },
 
                 {
@@ -210,6 +213,7 @@ function updateEmployeeRole() {
                 console.log("Updating employee role...\n");
                 connection.query(
                     "UPDATE employee SET ? WHERE ?",
+                    //use employee ID for WHERE instead? pulled from mySQL statement. console names to user, use ID for where statement.
                     [
                         {
                             manager: response.newManager
@@ -223,7 +227,7 @@ function updateEmployeeRole() {
                     ],
                     function (err, res) {
                         if (err) throw err;
-                        console.log(res.affectedRows + " employee role updated!\n");
+                        console.log(res.affectedRows + "'s manager updated!\n");
                         //main.init();
                     }
                 );

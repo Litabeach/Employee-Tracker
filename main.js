@@ -5,6 +5,7 @@ const questions = require("./questions");
 
 // const promptChoices = require("./promptChoices")
 // questions.promptChoices()
+// employees.getEmployees();
 
 function init(){
     promptChoices()

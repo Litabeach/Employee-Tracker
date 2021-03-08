@@ -12,7 +12,16 @@ connection.connect(function(err) {
   console.log("connected as id " + connection.threadId);
 });
 
-
+function getEmployees() {
+  let sql = "SELECT first_name, last_name FROM employees_db.employee";
+  connection.query(sql, function(err, res) {
+    if (err) throw err;
+    // for each statement to list our each employee name
+    res.forEach(field => {
+      console.log(field.first_name, field.last_name)
+    });
+  });
+}
 //view all employees with sql, show results in a table
 function viewEmployees() {
   let sql = "SELECT employee.id, first_name, last_name, title, salary, department, manager FROM employees_db.employee INNER JOIN role on role.id = employee.role_id INNER JOIN department on department.id = role.department_id;";
@@ -97,5 +106,6 @@ module.exports = {
   viewLegal,
   viewPeterson,
   viewXiong,
-  viewLamb
+  viewLamb,
+  getEmployees
 }
