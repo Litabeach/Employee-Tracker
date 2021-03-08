@@ -3,8 +3,6 @@ const employees = require("./employees");
 const connection = require("./connection");
 const main = require("./main");
 
-
-
 // inquirer questions to add an employee and sql logic to include that employee in the db
 function addEmployee() {
     return inquirer
@@ -42,24 +40,9 @@ function addEmployee() {
         ]).then(function (response) {
 
             //change role.response to role id
-            let role = response.role;
-            if (role == 'lead engineer') {
-                role = 1;
-            }
-            else if (role == 'software engineer') {
-                role = 2;
-            }
-            else if (role == 'accountant') {
-                role = 3;
-            }
-            else if (role == 'sales lead') {
-                role = 4;
-            }
-            else if (role == 'lawyer') {
-                role = 5;
-            }
-            else if (role == 'salesperson') {
-                role = 6;
+            var role = response.role;
+            for (var i = 1; i < role.length; i ++){
+            role = i
             }
 
             let manager = response.empManager
@@ -161,6 +144,7 @@ function selectDepartment() {
         })
 };
 
+// function updateEmployeeRole()
 
 module.exports = {
     addEmployee,

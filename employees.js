@@ -1,6 +1,5 @@
 const main = require("./main");
 const connection = require("./connection");
-//  m
 // const cTable = require('console.table');
 
 // console.log(main.init())
@@ -16,7 +15,7 @@ connection.connect(function(err) {
 
 //view all employees with sql, show results in a table
 function viewEmployees() {
-  let sql = "SELECT * FROM employees_db.employee LEFT JOIN role on role.id = employee.id ";
+  let sql = "SELECT * FROM employees_db.employee LEFT JOIN role on role.id = employee.role_id ";
   connection.query(sql, function(err, res) {
     if (err) throw err;
     console.table(res);

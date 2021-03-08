@@ -38,6 +38,15 @@ function promptChoices() {
             else if (response.choices == 'Remove Employee') {
                 questions.removeEmployee();
             }
+
+            else if (response.choices == 'Update Employee Role') {
+                questions.updateEmployeeRole();
+            }
+
+            // else if (response.choices ==  'Update Manager Role') {
+            //     questions.updateManagerRole();
+            // }
+
         })
 }
 
