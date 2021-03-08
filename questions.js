@@ -58,7 +58,7 @@ function addEmployee() {
                     first_name: response.firstName,
                     last_name: response.lastName,
                     role_id: role,
-                    manager_id: manager
+                    manager : manager
                 },
                 function (err, res) {
                     if (err) throw err;

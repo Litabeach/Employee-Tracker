@@ -71,7 +71,7 @@ function viewLegal() {
 } 
 
 function viewPeterson(){
-  let sql = "SELECT first_name, last_name, title FROM role LEFT JOIN employee ON employee.role_id = role.id WHERE manager_id = 'Sarah Peterson'";
+  let sql = "SELECT first_name, last_name, title FROM role LEFT JOIN employee ON employee.role_id = role.id WHERE manager = 'Sarah Peterson'";
   connection.query(sql, function(err, res) {
     if (err) throw err;
     console.table(res);
@@ -80,7 +80,7 @@ function viewPeterson(){
 }
 
 function viewXiong(){
-  let sql = "SELECT first_name, last_name, title FROM role LEFT JOIN employee ON employee.role_id = role.id WHERE manager_id = 'Gao Xiong'";
+  let sql = "SELECT first_name, last_name, title FROM role LEFT JOIN employee ON employee.role_id = role.id WHERE manager = 'Gao Xiong'";
   connection.query(sql, function(err, res) {
     if (err) throw err;
     console.table(res);
@@ -89,7 +89,7 @@ function viewXiong(){
 }
 
 function viewLamb(){
-  let sql = "SELECT first_name, last_name, title FROM role LEFT JOIN employee ON employee.role_id = role.id WHERE manager_id = 'Joe Lamb'";
+  let sql = "SELECT first_name, last_name, title FROM role LEFT JOIN employee ON employee.role_id = role.id WHERE manager = 'Joe Lamb'";
   connection.query(sql, function(err, res) {
     if (err) throw err;
     console.table(res);
