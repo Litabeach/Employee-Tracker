@@ -2,37 +2,8 @@ const inquirer = require("inquirer");
 const employees = require("./employees");
 const connection = require("./connection");
 
-// initial question with selections for user
-function promptChoices() {
-    return inquirer
-        .prompt([
-            {
-                type: 'list',
-                name: 'choices',
-                message: "What would you like to do",
-                choices: ['View All Employees', 'View All Employees By Department', 'View All Employees By Manager', 'Add Employee', 'Remove Employee', 'Update Employee Role', 'Update Manager Role']
-            },
-        ]).then(function (response) {
-            //run a unique function depending on the response
-            if (response.choices == 'Add Employee')
-                addEmployee();
-            else if (response.choices == 'View All Employees') {
-                employees.viewEmployees();
-            }
-            else if (response.choices == 'View All Employees By Department') {
-                selectDepartment();
-            }
-            else if (response.choices == 'View All Employees By Manager') {
-                viewByManager();
-            }
-            else if (response.choices == 'Remove Employee') {
-                removeEmployee();
-            }
-        })
-}
 
-
-// inquirer questions to add an employee
+// inquirer questions to add an employee and sql logic to include that employee in the db
 function addEmployee() {
     return inquirer
         .prompt([
@@ -58,6 +29,14 @@ function addEmployee() {
 
             },
 
+            {
+                type: 'list',
+                name: 'empManager',
+                message: "Who is the employee's manager?",
+                choices: ['Sarah Peterson', 'Gao Xiong', 'Joe Lamb', 'none']
+
+            },
+
         ]).then(function (response) {
 
             //change role.response to role id
@@ -80,6 +59,11 @@ function addEmployee() {
             else if (role == 'salesperson') {
                 role = 6;
             }
+
+            let manager = response.empManager
+            if (manager == 'none') {
+                manager = null;
+            }
             console.log("Creating a new employee...\n");
             //insert into SQL
             var query = connection.query(
@@ -87,7 +71,8 @@ function addEmployee() {
                 {
                     first_name: response.firstName,
                     last_name: response.lastName,
-                    role_id: role
+                    role_id: role,
+                    manager_id: manager
                 },
                 function (err, res) {
                     if (err) throw err;
@@ -109,7 +94,7 @@ function removeEmployee() {
         ]).then(function (response) {
             console.log("Deleting employee...\n");
             connection.query(
-              "DELETE FROM employees WHERE ?",
+              "DELETE FROM employee WHERE ?",
               {
                 id: response.deleteID
               },
@@ -175,9 +160,8 @@ function selectDepartment() {
 
 
 module.exports = {
-    // addEmployee,
-    // removeEmployee,
+    addEmployee,
+    removeEmployee,
     selectDepartment,
     viewByManager
-    // promptChoices
 }

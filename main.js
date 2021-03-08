@@ -34,6 +34,10 @@ function promptChoices() {
             else if (response.choices == 'View All Employees By Manager'){
                 questions.viewByManager();
             }
+
+            else if (response.choices == 'Remove Employee') {
+                questions.removeEmployee();
+            }
         })
 }
 

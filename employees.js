@@ -89,24 +89,6 @@ function viewLamb(){
   });
 }
 
-function createEmployee() {
-console.log("Creating a new employee...\n");
-var query = connection.query(
-  "INSERT INTO employee SET ?",
-  {
-    title: response.firstName,
-    artist: response.lastName,
-    genre: role
-  },
-  function(err, res) {
-    if (err) throw err;
-    console.log(res.affectedRows + " song inserted!\n");
-    // Call updateProduct AFTER the INSERT completes
-    // updateSong();
-  }
-);
-}
-
 
 module.exports = {
   viewEmployees,
@@ -116,6 +98,5 @@ module.exports = {
   viewLegal,
   viewPeterson,
   viewXiong,
-  viewLamb,
-  createEmployee
+  viewLamb
 }
