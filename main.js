@@ -49,7 +49,7 @@ function promptChoices() {
             }
 
             // else if (response.choices ==  'Update Manager Role') {
-            //     questions.updateManagerRole();
+            //     questions.updateManager();
             // }
 
         })

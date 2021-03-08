@@ -151,10 +151,16 @@ function updateEmployeeRole() {
         .prompt([
             {
                 type: 'list',
-                name: 'updateRole',
+                name: 'selectEmployee',
                 message: "Which employee would you like to update?",
-                choices: ['names of all employees from connection.query??']
+                choices: ['names of all employees from connection.query pulled using a msql statement?']
+            },
 
+            {
+                type: 'list',
+                name: 'updateRole',
+                message: "What is their new role?",
+                choices: ['lead engineer', 'software engineer', 'accountant', 'legal team aid', 'sales lead', 'lawyer', 'salesperson']
             },
 
         ]).then(function (response) {
@@ -166,10 +172,10 @@ function updateEmployeeRole() {
                         role_id: response.updateRole
                     },
                     {
-                        first_name: "xyz"
+                        first_name: response.selectEmployee
                     },
                     {
-                        last_name: "xyz"
+                        last_name: response.selectEmployee
                     }
                 ],
                 function (err, res) {
@@ -183,10 +189,53 @@ function updateEmployeeRole() {
     }
 
 
+    function updateManager() {
+        return inquirer
+            .prompt([
+                {
+                    type: 'list',
+                    name: 'employee',
+                    message: "Which employee's manager would you like to update?",
+                    choices: ['names of all employees from connection.query pulled using a msql statement?']
+                },
+
+                {
+                    type: 'list',
+                    name: 'newManager',
+                    message: "Which employee do you want to set as manager?",
+                    choices: ['Sarah Peterson', 'Gao Xiong', 'Joe Lamb']
+                },
+    
+            ]).then(function (response) {
+                console.log("Updating employee role...\n");
+                connection.query(
+                    "UPDATE employee SET ? WHERE ?",
+                    [
+                        {
+                            manager: response.newManager
+                        },
+                        {
+                            first_name: response.employee
+                        },
+                        {
+                            last_name: response.employee
+                        }
+                    ],
+                    function (err, res) {
+                        if (err) throw err;
+                        console.log(res.affectedRows + " employee role updated!\n");
+                        //main.init();
+                    }
+                );
+    
+            })
+        }
+
 module.exports = {
                 addEmployee,
                 removeEmployee,
                 selectDepartment,
                 viewByManager,
-                updateEmployeeRole
+                updateEmployeeRole,
+                updateManager
             }
