@@ -22,9 +22,11 @@ function promptChoices() {
             else if (response.choices == 'View All Employees By Department') {
                 selectDepartment();
             }
-
             else if (response.choices == 'View All Employees By Manager') {
                 viewByManager();
+            }
+            else if (response.choices == 'Remove Employee') {
+                removeEmployee();
             }
         })
 }
@@ -95,6 +97,30 @@ function addEmployee() {
         })
 }
 
+function removeEmployee() {
+    return inquirer
+        .prompt([
+            {
+                type: 'input',
+                name: 'deleteID',
+                message: "What is the ID of the employee that you would like to delete?",
+            },
+
+        ]).then(function (response) {
+            console.log("Deleting employee...\n");
+            connection.query(
+              "DELETE FROM employees WHERE ?",
+              {
+                id: response.deleteID
+              },
+              function(err, res) {
+                if (err) throw err;
+                console.log(res.affectedRows + " employee deleted!\n");
+              }
+            );
+          })
+        };
+
 
 function viewByManager() {
     return inquirer
@@ -149,8 +175,9 @@ function selectDepartment() {
 
 
 module.exports = {
-    addEmployee,
+    // addEmployee,
+    // removeEmployee,
     selectDepartment,
-    viewByManager,
-    promptChoices
+    viewByManager
+    // promptChoices
 }
