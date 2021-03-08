@@ -41,8 +41,8 @@ function addEmployee() {
 
             //change role.response to role id
             var role = response.role;
-            for (var i = 1; i < role.length; i ++){
-            role = i
+            for (var i = 1; i < role.length; i++) {
+                role = i
             }
 
             let manager = response.empManager
@@ -65,7 +65,7 @@ function addEmployee() {
                 }
             );
         })
-        // main.init()
+    // main.init()
 }
 
 function removeEmployee() {
@@ -80,17 +80,18 @@ function removeEmployee() {
         ]).then(function (response) {
             console.log("Deleting employee...\n");
             connection.query(
-              "DELETE FROM employee WHERE ?",
-              {
-                id: response.deleteID
-              },
-              function(err, res) {
-                if (err) throw err;
-                console.log(res.affectedRows + " employee deleted!\n");
-              }
+                "DELETE FROM employee WHERE ?",
+                {
+                    id: response.deleteID
+                },
+                function (err, res) {
+                    if (err) throw err;
+                    console.log(res.affectedRows + " employee deleted!\n");
+                }
             );
-          })
-        };
+        })
+    // main.init()
+};
 
 
 function viewByManager() {
@@ -144,11 +145,46 @@ function selectDepartment() {
         })
 };
 
-// function updateEmployeeRole()
+function updateEmployeeRole() {
+    return inquirer
+        .prompt([
+            {
+                type: 'list',
+                name: 'updateRole',
+                message: "Which employee would you like to update?",
+                choices: ['names of all employees from connection.query??']
+
+            },
+
+        ]).then(function (response) {
+            console.log("Updating employee role...\n");
+            connection.query(
+                "UPDATE employee SET ? WHERE ??",
+                [
+                    {
+                        role_id: response.updateRole
+                    },
+                    {
+                        first_name: "xyz"
+                    },
+                    {
+                        last_name: "xyz"
+                    }
+                ],
+                function (err, res) {
+                    if (err) throw err;
+                    console.log(res.affectedRows + " employee role updated!\n");
+                    //main.init();
+                }
+            );
+
+        })
+    }
+
 
 module.exports = {
-    addEmployee,
-    removeEmployee,
-    selectDepartment,
-    viewByManager
-}
+                addEmployee,
+                removeEmployee,
+                selectDepartment,
+                viewByManager
+            }
