@@ -46,7 +46,7 @@ init();
 // promptChoices();
 
 module.exports = {
-    // init
+    init,
     promptChoices
 }
 

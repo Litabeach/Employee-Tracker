@@ -1,6 +1,8 @@
 const inquirer = require("inquirer");
 const employees = require("./employees");
 const connection = require("./connection");
+const main = require("./main");
+
 
 
 // inquirer questions to add an employee and sql logic to include that employee in the db
@@ -66,7 +68,7 @@ function addEmployee() {
             }
             console.log("Creating a new employee...\n");
             //insert into SQL
-            var query = connection.query(
+            connection.query(
                 "INSERT INTO employee SET ?",
                 {
                     first_name: response.firstName,
@@ -80,6 +82,7 @@ function addEmployee() {
                 }
             );
         })
+        // main.init()
 }
 
 function removeEmployee() {
@@ -117,7 +120,7 @@ function viewByManager() {
                 choices: ['Sarah Peterson', 'Gao Xiong', 'Joe Lamb']
             },
         ]).then(function (response) {
-            //run a unique function depending on the response
+            //run a unique view function using SQL depending on the response
             if (response.manager == 'Sarah Peterson') {
                 employees.viewPeterson()
             }

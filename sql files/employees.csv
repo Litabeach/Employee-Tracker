@@ -1,0 +1,8 @@
+id,first_name,last_name,role_id,manager_id
+1,Sarah,Peterson,5,NULL
+2,Joe,Lamb,4,NULL
+3,Linda,Flynn,6,"Sarah Peterson"
+4,Jorge,Gonzalez,2,"Gao Xiong"
+5,Gao,Xiong,1,NULL
+6,Shanice,Jones,3,NULL
+7,Jerry,Johnson,7,"Joe Lamb"
