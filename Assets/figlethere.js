@@ -1,4 +1,4 @@
-const figlet = figlet('Employee Tracker', function(err, data) {
+figlet('Employee Tracker', function(err, data) {
     if (err) {
         console.log('Something went wrong...');
         console.dir(err);
@@ -9,5 +9,5 @@ const figlet = figlet('Employee Tracker', function(err, data) {
 
 
 module.exports = {
-    figlet
+    figlet()
 }

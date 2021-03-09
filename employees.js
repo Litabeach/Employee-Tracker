@@ -1,6 +1,7 @@
 const main = require("./main");
 const connection = require("./connection");
 const cTable = require('console.table');
+// const firstQuestion = require("./firstQuestion");
 
 // console.log(main.init())
 // console.log(main)

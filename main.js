@@ -2,42 +2,27 @@ const inquirer = require("inquirer");
 const employees = require("./employees");
 const questions = require("./questions");
 var figlet = require('figlet');
-// const firstQuestion = require("./firstQuestion");
+const connection = require("./connection");
 
-// const promptChoices = require("./promptChoices")
-// questions.promptChoices()
+// const firstQuestion = require("./firstQuestion");
 // employees.getEmployees();
 
-// //figlet
-// figlet('Employee Tracker', function(err, data) {
-//     if (err) {
-//         console.log('Something went wrong...');
-//         console.dir(err);
-//         return;
-//     }
-//     console.log(data)
-// });
+function initFiglet(){
+figlet('Employee Tracker', function(err, data) {
+    if (err) {
+        console.log('Something went wrong...');
+        console.dir(err);
+        return;
+    }
+    console.log(data)
+});
+}
 
 //add an async/await to make figlet appear below choices?
 
-async function init(){
-    await figlet('Employee Tracker', function(err, data) {
-        if (err) {
-            console.log('Something went wrong...');
-            console.dir(err);
-            return;
-        }
-        console.log(data)
-    });
-    promptChoices()
+function init(){
+    promptChoices();
 }
-
-
-// const firstQuestion = promptChoices();
-
-// function init(){
-//     firstQuestion
-// }
 
 // initial question with selections for user
 function promptChoices() {
@@ -47,7 +32,7 @@ function promptChoices() {
                 type: 'list',
                 name: 'choices',
                 message: "What would you like to do",
-                choices: ['View All Employees', 'View All Employees By Department', 'View All Employees By Manager', 'Add Employee', 'Remove Employee', 'Update Employee Role', 'Update Manager Role']
+                choices: ['View All Employees', 'View Employees By Department', 'View Employees By Manager', 'Add Employee', 'Remove Employee', 'Update Employee Role', 'Update Manager Role', 'Exit']
             },
         ]).then(function (response) {
             //run a unique function depending on the response
@@ -56,11 +41,11 @@ function promptChoices() {
             else if (response.choices == 'View All Employees'){
                 employees.viewEmployees();
             }
-            else if (response.choices == 'View All Employees By Department'){
+            else if (response.choices == 'View Employees By Department'){
                 questions.selectDepartment();
             }
 
-            else if (response.choices == 'View All Employees By Manager'){
+            else if (response.choices == 'View Employees By Manager'){
                 questions.viewByManager();
             }
 
@@ -75,17 +60,19 @@ function promptChoices() {
             else if (response.choices ==  'Update Manager Role') {
                 questions.updateManager();
             }
-
+            else if (response.choices == "Exit") {
+            console.log("Now leaving employee database...")
+            connection.end();
+            }
         })
 }
 
+// initFiglet();
 init();
 
-// promptChoices();
 
 module.exports = {
     init,
-    // firstQuestion,
     promptChoices
 }
 

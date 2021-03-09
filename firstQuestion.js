@@ -35,9 +35,9 @@ function promptChoices() {
                 questions.updateEmployeeRole();
             }
 
-            // else if (response.choices ==  'Update Manager Role') {
-            //     questions.updateManagerRole();
-            // }
+            else if (response.choices ==  'Update Manager Role') {
+                questions.updateManagerRole();
+            }
 
         })
 }
