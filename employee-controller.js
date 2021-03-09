@@ -1,8 +1,9 @@
 const inquirer = require("inquirer");
-const employees = require("./employees");
+const employees = require("./employee-view");
 const connection = require("./connection");
-const main = require("./main");
-const cTable = require('console.table');
+// const main = require("./main");
+
+
 
 // inquirer questions to add an employee and sql logic to include that employee in the db
 function addEmployee() {
@@ -65,8 +66,8 @@ function addEmployee() {
                     console.log(res.affectedRows + " employee inserted!\n");
                 }
             );
+            main.promptChoices();
         })
-    // main.init()
 }
 
 //change the prompt to a list that includes current employees pulled from the database when I figure out how, see updaterole and update manager
@@ -91,33 +92,10 @@ function removeEmployee() {
                     console.log(res.affectedRows + " employee deleted!\n");
                 }
             );
-        })
-    // main.init()
-};
-
-
-function viewByManager() {
-    return inquirer
-        .prompt([
-            {
-                type: 'list',
-                name: 'manager',
-                message: "Select a manager",
-                choices: ['Sarah Peterson', 'Gao Xiong', 'Joe Lamb']
-            },
-        ]).then(function (response) {
-            //run a unique view function using SQL depending on the response
-            if (response.manager == 'Sarah Peterson') {
-                employees.viewPeterson()
-            }
-            else if (response.manager == 'Gao Xiong') {
-                employees.viewXiong()
-            }
-            else if (response.manager == 'Joe Lamb') {
-                employees.viewLamb()
-            }
+            main.promptChoices();
         })
 };
+
 
 //select department
 function selectDepartment() {
@@ -147,15 +125,31 @@ function selectDepartment() {
         })
 };
 
+
 function updateEmployeeRole() {
-     // var employeeList = employees.getEmployees()
+    // let sql = "SELECT first_name, last_name FROM employee";
+  let sql = `SELECT CONCAT (first_name, " " , last_name) AS full_name FROM employee`
+  let employeesArray = [];
+  // console.log("before connection", employees)
+  connection.query(sql, function(err, res) {
+  // console.log(res)
+  // console.log("after connection", employees)
+    if (err) throw err;
+    // for each statement to list our each employee name
+    res.forEach(employee => {
+      //   console.log("first employee", employee.full_name)
+      employeesArray.push(employee.full_name)
+      // console.log("after push", employees)
+  });
+  // console.log(employeesArray)
+  });
     return inquirer
         .prompt([
             {
-                type: 'list',
                 name: 'selectEmployee',
+                type: 'list', 
                 message: "Which employee would you like to update?",
-                choices: ['names of all employees from connection.query pulled using a msql statement? Use employees.getEmployees()?']
+                choices: employeesArray,
             },
 
             {
@@ -174,12 +168,12 @@ function updateEmployeeRole() {
                     {
                         role_id: response.updateRole
                     },
-                    {
-                        first_name: response.selectEmployee
-                    },
-                    {
-                        last_name: response.selectEmployee
-                    }
+                    // {
+                    //     first_name: response.selectEmployee
+                    // },
+                    // {
+                    //     last_name: response.selectEmployee
+                    // }
                 ],
                 function (err, res) {
                     if (err) throw err;
@@ -240,7 +234,6 @@ module.exports = {
                 addEmployee,
                 removeEmployee,
                 selectDepartment,
-                viewByManager,
                 updateEmployeeRole,
                 updateManager
             }

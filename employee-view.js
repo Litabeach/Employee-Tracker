@@ -1,35 +1,11 @@
-const main = require("./main");
 const connection = require("./connection");
-const cTable = require('console.table');
-// const firstQuestion = require("./firstQuestion");
 
-// console.log(main.init())
-// console.log(main)
-// console.log(main.test)
-
-
-connection.connect(function(err) {
-  if (err) throw err;
-  console.log("connected as id " + connection.threadId);
-});
-
-function getEmployees() {
-  let sql = "SELECT first_name, last_name FROM employees_db.employee";
-  connection.query(sql, function(err, res) {
-    if (err) throw err;
-    // for each statement to list our each employee name
-    res.forEach(field => {
-      console.log(field.first_name, field.last_name)
-    });
-  });
-}
 //view all employees with sql, show results in a table
 function viewEmployees() {
   let sql = "SELECT employee.id, first_name, last_name, title, salary, department, manager FROM employees_db.employee INNER JOIN role on role.id = employee.role_id INNER JOIN department on department.id = role.department_id;";
   connection.query(sql, function(err, res) {
     if (err) throw err;
     console.table(res);
-    // main.promptChoices()
   });
 }
 
@@ -39,7 +15,6 @@ function viewSales() {
   connection.query(sql, function(err, res) {
     if (err) throw err;
     console.table(res);
-    // main.promptChoices();
   });
 } 
 
@@ -49,7 +24,6 @@ function viewEngineers() {
   connection.query(sql, function(err, res) {
     if (err) throw err;
     console.table(res);
-    // main.promptChoices();
   });
 } 
 
@@ -58,7 +32,6 @@ function viewFinance() {
   connection.query(sql, function(err, res) {
     if (err) throw err;
     console.table(res);
-    // main.promptChoices();
   });
 } 
 
@@ -67,7 +40,6 @@ function viewLegal() {
   connection.query(sql, function(err, res) {
     if (err) throw err;
     console.table(res);
-    // main.promptChoices();
   });
 } 
 
@@ -76,7 +48,6 @@ function viewPeterson(){
   connection.query(sql, function(err, res) {
     if (err) throw err;
     console.table(res);
-    // main.promptChoices();
   });
 }
 
@@ -85,7 +56,6 @@ function viewXiong(){
   connection.query(sql, function(err, res) {
     if (err) throw err;
     console.table(res);
-    // main.promptChoices();
   });
 }
 
@@ -94,10 +64,31 @@ function viewLamb(){
   connection.query(sql, function(err, res) {
     if (err) throw err;
     console.table(res);
-    // main.promptChoices();
   });
 }
 
+function viewByManager() {
+  return inquirer
+      .prompt([
+          {
+              type: 'list',
+              name: 'manager',
+              message: "Select a manager",
+              choices: ['Sarah Peterson', 'Gao Xiong', 'Joe Lamb']
+          },
+      ]).then(function (response) {
+          //run a unique view function using SQL depending on the response
+          if (response.manager == 'Sarah Peterson') {
+             viewPeterson()
+          }
+          else if (response.manager == 'Gao Xiong') {
+              viewXiong()
+          }
+          else if (response.manager == 'Joe Lamb') {
+              viewLamb()
+          }
+      })
+};
 
 module.exports = {
   viewEmployees,
@@ -108,5 +99,5 @@ module.exports = {
   viewPeterson,
   viewXiong,
   viewLamb,
-  getEmployees
+  viewByManager
 }

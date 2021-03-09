@@ -1,3 +1,9 @@
+package-lock.json
+node_modules
+DS_Store
+.env
+assignmentdetails.md
+
 # Logs
 logs
 *.log

@@ -1,6 +1,7 @@
 const inquirer = require("inquirer");
-const employees = require("./employees");
-const questions = require("./questions");
+const employees = require("./employee-view");
+const questions = require("./employee-controller");
+
 
 // initial question with selections for user
 function promptChoices() {

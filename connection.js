@@ -14,4 +14,9 @@ var connection = mysql.createConnection({
   database: "employees_db"
 });
 
+
 module.exports = connection;
+
+  // process.env.DB_NAME,
+  // process.env.DB_USER,
+  // process.env.DB_PASSWORD,
