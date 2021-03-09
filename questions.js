@@ -69,6 +69,7 @@ function addEmployee() {
     // main.init()
 }
 
+//change the prompt to a list that includes current employees pulled from the database when I figure out how, see updaterole and update manager
 function removeEmployee() {
     return inquirer
         .prompt([

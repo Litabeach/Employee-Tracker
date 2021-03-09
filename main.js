@@ -1,15 +1,38 @@
 const inquirer = require("inquirer");
 const employees = require("./employees");
 const questions = require("./questions");
+var figlet = require('figlet');
 // const firstQuestion = require("./firstQuestion");
 
 // const promptChoices = require("./promptChoices")
 // questions.promptChoices()
 // employees.getEmployees();
 
-function init(){
+// //figlet
+// figlet('Employee Tracker', function(err, data) {
+//     if (err) {
+//         console.log('Something went wrong...');
+//         console.dir(err);
+//         return;
+//     }
+//     console.log(data)
+// });
+
+//add an async/await to make figlet appear below choices?
+
+async function init(){
+    await figlet('Employee Tracker', function(err, data) {
+        if (err) {
+            console.log('Something went wrong...');
+            console.dir(err);
+            return;
+        }
+        console.log(data)
+    });
     promptChoices()
 }
+
+
 // const firstQuestion = promptChoices();
 
 // function init(){
@@ -49,9 +72,9 @@ function promptChoices() {
                 questions.updateEmployeeRole();
             }
 
-            // else if (response.choices ==  'Update Manager Role') {
-            //     questions.updateManager();
-            // }
+            else if (response.choices ==  'Update Manager Role') {
+                questions.updateManager();
+            }
 
         })
 }
