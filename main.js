@@ -1,6 +1,7 @@
 const inquirer = require("inquirer");
 const employeeView = require("./employee-view");
 const employeeController = require("./employee-controller");
+const connection = require("./connection");
 // var figlet = require('figlet');
 
 // // add an async/await to make figlet appear below choices?
@@ -65,15 +66,13 @@ async function promptChoices() {
                 employeeController.updateManager();
             }
             else if (response.choices == "Exit") {
-            console.log("Now leaving employee database...")
+            console.log("Now leaving employee tracker...")
             connection.end();
             }
         }
         
     
-
 promptChoices();
-
 
 // while (true){
 //     promptChoices()
