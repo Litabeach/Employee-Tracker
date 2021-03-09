@@ -1,7 +1,7 @@
 # Employee-Tracker
 
 ## Description 
-Manage a company's employee database from the command line using mySQL, node.js and javascript.
+Manage a company's employee database from the command line. Built with mySQL, node.js and javascript.
 
 Published at: [heroku link here]
 
