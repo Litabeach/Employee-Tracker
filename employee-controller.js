@@ -130,16 +130,16 @@ function updateEmployeeRole() {
     // let sql = "SELECT first_name, last_name FROM employee";
   let sql = `SELECT CONCAT (first_name, " " , last_name) AS full_name FROM employee`
   let employeesArray = [];
-  // console.log("before connection", employees)
+  // console.log("before connection", employeesArray)
   connection.query(sql, function(err, res) {
   // console.log(res)
-  // console.log("after connection", employees)
+  // console.log("after connection", employeesArray)
     if (err) throw err;
     // for each statement to list our each employee name
     res.forEach(employee => {
       //   console.log("first employee", employee.full_name)
       employeesArray.push(employee.full_name)
-      // console.log("after push", employees)
+      // console.log("after push", employeesArray)
   });
   // console.log(employeesArray)
   });

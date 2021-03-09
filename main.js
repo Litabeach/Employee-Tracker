@@ -3,7 +3,7 @@ const employeeView = require("./employee-view");
 const employeeController = require("./employee-controller");
 // var figlet = require('figlet');
 
-//add an async/await to make figlet appear below choices?
+// // add an async/await to make figlet appear below choices?
 // function initFiglet(){
 // figlet('Employee Tracker', function(err, data) {
 //     if (err) {
@@ -15,10 +15,21 @@ const employeeController = require("./employee-controller");
 // });
 // }
 
+// initFiglet()
+// async function initFiglet(){
+// let figlet = await('Employee Tracker', function(err, data) {
+//     if (err) {
+//         console.log('Something went wrong...');
+//         console.dir(err);
+//         return;
+//     }
+//     console.log(data)
+// });
+// }
 
 // initial question with selections for user
 async function promptChoices() {
-    const response = await inquirer
+    let response = await inquirer
         .prompt([
             {
                 type: 'list',
@@ -61,9 +72,9 @@ async function promptChoices() {
         
     
 
-// promptChoices();
+promptChoices();
 
 
-  while (true){
-    promptChoices()
-};
+// while (true){
+//     promptChoices()
+// };
