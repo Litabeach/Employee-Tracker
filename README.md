@@ -19,6 +19,7 @@ Run "npm init", "npm i" then "npm start" from the command line. Navigate through
 
 ## Credits
 
+Nathan Perfetti
 Chris Woolcott
 
 ## Copyright
