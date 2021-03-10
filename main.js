@@ -241,8 +241,10 @@ function updateEmployeeRole() {
                               // const updateRoleQuery= connection.query('UPDATE employees SET role_id = ? WHERE id = ?', [newRole, selectedEmp]
                 // SELECT id, concat(first_name, \' \', last_name) AS name FROM employees'
                 connection.query(
-                    "UPDATE employee INNER JOIN role on employee.role_id = role.id SET ? AND ? WHERE ? AND ?",
-
+                    // "SELECT employee.id, first_name, last_name, title, salary, department, manager FROM employees_db.employee INNER JOIN role on role.id = employee.role_id INNER JOIN department on department.id = role.department_id;";
+                    // "UPDATE employee INNER JOIN role on employee.role_id = role.id SET ? AND ? WHERE ? AND ?",
+                    "UPDATE employee INNER JOIN role on role.id = employee.role_id INNER JOIN department on department.id = role.department_id SET ?, ? WHERE ? AND ?",
+                    // INNER JOIN role on role.id = employee.role_id INNER JOIN department on department.id = role.department_id
                     //use employee ID for WHERE instead of first/last name? pulled from mySQL statement. console names to user, use ID for where statement.
                     [
                         {
@@ -260,13 +262,13 @@ function updateEmployeeRole() {
                     ],
                     function (err, res) {
                         if (err) throw err;
-                        console.log(res.affectedRows + " employee role updated!\n");
+                        console.log("employee role updated!\n");
 
                     }
-                );
+                );promptChoices();
 
-            })
-    });
+            }) 
+    }); 
 } //end of updateEmployeeRole()
 
 
