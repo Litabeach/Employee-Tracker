@@ -287,14 +287,18 @@ function updateManager() {
                     type: 'list',
                     name: 'newManager',
                     message: "Which employee do you want to set as manager?",
-                    choices: ['Sarah Peterson', 'Gao Xiong', 'Joe Lamb']
+                    choices: ['Sarah Peterson', 'Gao Xiong', 'Joe Lamb', 'none']
                 },
 
             ]).then(function (response) {
-                console.log("Updating employee role...\n");
+                console.log("Updating employee manager...\n");
+                let manager = response.newManager
+                if (manager == 'none') {
+                    manager = null;
+                }
                 const name = response.employee.split(' ')  
                 connection.query(
-                    "UPDATE employee SET ? WHERE ? AND ?"
+                    "UPDATE employee SET ? WHERE ? AND ?",
                     [
                         {
                             manager: response.newManager
@@ -308,7 +312,8 @@ function updateManager() {
                     ],
                     function (err, res) {
                         if (err) throw err;
-                        console.log(res.affectedRows + "'s manager updated!\n");
+                        console.log(res.affectedRows + " employee's manager updated!\n");
+                        promptChoices();
                     }
                 );
 
