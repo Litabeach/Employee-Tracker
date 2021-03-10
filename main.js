@@ -33,7 +33,7 @@ function promptChoices() {
                 type: 'list',
                 name: 'choices',
                 message: "What would you like to do",
-                choices: ['View All Employees', 'View Employees By Department', 'View Employees By Manager', 'Add Employee', 'Remove Employee', 'Update Employee Role', 'Update Manager Role', 'Exit']
+                choices: ['View All Employees', 'View Employees By Department', 'View Employees By Manager', 'Add Employee', 'Remove Employee', 'Update Employee Role', 'Update Employee Manager', 'Exit']
             }
 
         ]).then(function (response) {
@@ -59,7 +59,7 @@ function promptChoices() {
                 updateEmployeeRole();
             }
 
-            else if (response.choices == 'Update Manager Role') {
+            else if (response.choices == 'Update Employee Manager') {
                 updateManager();
             }
             else if (response.choices == "Exit") {
@@ -192,19 +192,16 @@ function selectDepartment() {
         })
 };
 
-//Update
+//Update employee role
 function updateEmployeeRole() {
     let sql = `SELECT CONCAT (first_name, " " , last_name) AS full_name FROM employee`;
     let employeesArray = [];
     connection.query(sql, function (err, res) {
         if (err) throw err;
 
-        // for each statement to list our each employee name
+        // for each statement to list each employee name
         res.forEach(employee => {
             employeesArray.push(employee.full_name);
-            // const name = employee.full_name.split(' ');
-            // console.log(name[0])
-            // console.log(name[1])
         });
 
 
@@ -236,16 +233,11 @@ function updateEmployeeRole() {
             ]).then(function (response) {
                 console.log("Updating employee role...\n");
                 const name = response.selectEmployee.split(' ')  
-                // console.log(name[0])
-                // console.log(name[1])
-                              // const updateRoleQuery= connection.query('UPDATE employees SET role_id = ? WHERE id = ?', [newRole, selectedEmp]
-                // SELECT id, concat(first_name, \' \', last_name) AS name FROM employees'
+                console.log(name[0])
+    
                 connection.query(
-                    // "SELECT employee.id, first_name, last_name, title, salary, department, manager FROM employees_db.employee INNER JOIN role on role.id = employee.role_id INNER JOIN department on department.id = role.department_id;";
-                    // "UPDATE employee INNER JOIN role on employee.role_id = role.id SET ? AND ? WHERE ? AND ?",
                     "UPDATE employee INNER JOIN role on role.id = employee.role_id INNER JOIN department on department.id = role.department_id SET ?, ? WHERE ? AND ?",
-                    // INNER JOIN role on role.id = employee.role_id INNER JOIN department on department.id = role.department_id
-                    //use employee ID for WHERE instead of first/last name? pulled from mySQL statement. console names to user, use ID for where statement.
+                    
                     [
                         {
                             department : response.department
@@ -262,25 +254,24 @@ function updateEmployeeRole() {
                     ],
                     function (err, res) {
                         if (err) throw err;
-                        console.log("employee role updated!\n");
-
+                        console.log(res.affectedRows + " employee role(s) updated!\n");
+                        promptChoices();
                     }
-                );promptChoices();
-
+                );
             }) 
     }); 
 } //end of updateEmployeeRole()
 
 
 function updateManager() {
-    // let sql = "SELECT first_name, last_name FROM employee";
-    let sql = `SELECT CONCAT (first_name, " " , last_name) AS full_name FROM employee`
+    let sql = `SELECT CONCAT (first_name, " " , last_name) AS full_name FROM employee`;
     let employeesArray = [];
     connection.query(sql, function (err, res) {
         if (err) throw err;
-        // for each statement to list our each employee name
+
+        // for each statement to list each employee name
         res.forEach(employee => {
-            employeesArray.push(employee.full_name)
+            employeesArray.push(employee.full_name);
         });
         // var employeeList = employees.getEmployees()
         return inquirer
@@ -301,18 +292,18 @@ function updateManager() {
 
             ]).then(function (response) {
                 console.log("Updating employee role...\n");
+                const name = response.employee.split(' ')  
                 connection.query(
-                    "UPDATE employee SET ? WHERE ?",
-                    //use employee ID for WHERE instead? pulled from mySQL statement. console names to user, use ID for where statement.
+                    "UPDATE employee SET ? WHERE ? AND ?"
                     [
                         {
                             manager: response.newManager
                         },
                         {
-                            first_name: response.employee
+                            first_name: name[0]
                         },
                         {
-                            last_name: response.employee
+                            last_name: name[1]
                         }
                     ],
                     function (err, res) {
