@@ -312,7 +312,7 @@ function updateManager() {
                     ],
                     function (err, res) {
                         if (err) throw err;
-                        console.log(res.affectedRows + " employee's manager updated!\n");
+                        console.log(res.affectedRows + " manager updated!\n");
                         promptChoices();
                     }
                 );
