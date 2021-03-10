@@ -195,14 +195,14 @@ function selectDepartment() {
 
 //Update
 function updateEmployeeRole() {
-    // let sql = "SELECT first_name, last_name FROM employee";
-    let sql = `SELECT CONCAT (first_name, " " , last_name) AS full_name FROM employee`
+    let sql = "SELECT first_name, last_name FROM employee"
+    // let sql = `SELECT CONCAT (first_name, " " , last_name) AS full_name FROM employee`
     let employeesArray = [];
     connection.query(sql, function (err, res) {
         if (err) throw err;
         // for each statement to list our each employee name
         res.forEach(employee => {
-            employeesArray.push(employee.full_name)
+            employeesArray.push(employee.first_name,employee.last_name)
         });
 
         return inquirer
@@ -224,18 +224,19 @@ function updateEmployeeRole() {
             ]).then(function (response) {
                 console.log("Updating employee role...\n");
                 connection.query(
-                    "UPDATE employee SET ? WHERE ??",
+                    "UPDATE employee INNER JOIN role on employee.role_id = role.id SET ? WHERE ?",
+                    
                     //use employee ID for WHERE instead of first/last name? pulled from mySQL statement. console names to user, use ID for where statement.
                     [
                         {
-                            role_id: response.updateRole
+                            title: response.updateRole
                         },
-                        // {
-                        //     first_name: response.selectEmployee
-                        // },
-                        // {
-                        //     last_name: response.selectEmployee
-                        // }
+                        {
+                            first_name: response.selectEmployee
+                        },
+                        {
+                            last_name: response.selectEmployee
+                        },
                     ],
                     function (err, res) {
                         if (err) throw err;
@@ -249,59 +250,59 @@ function updateEmployeeRole() {
 } //end of updateEmployeeRole()
 
 
-function updateManager() {
-    // let sql = "SELECT first_name, last_name FROM employee";
-    let sql = `SELECT CONCAT (first_name, " " , last_name) AS full_name FROM employee`
-    let employeesArray = [];
-    connection.query(sql, function (err, res) {
-        if (err) throw err;
-        // for each statement to list our each employee name
-        res.forEach(employee => {
-            employeesArray.push(employee.full_name)
-        });
-        // var employeeList = employees.getEmployees()
-        return inquirer
-            .prompt([
-                {
-                    type: 'list',
-                    name: 'employee',
-                    message: "Which employee's manager would you like to update?",
-                    choices: employeesArray
-                },
+// function updateManager() {
+//     // let sql = "SELECT first_name, last_name FROM employee";
+//     let sql = `SELECT CONCAT (first_name, " " , last_name) AS full_name FROM employee`
+//     let employeesArray = [];
+//     connection.query(sql, function (err, res) {
+//         if (err) throw err;
+//         // for each statement to list our each employee name
+//         res.forEach(employee => {
+//             employeesArray.push(employee.full_name)
+//         });
+//         // var employeeList = employees.getEmployees()
+//         return inquirer
+//             .prompt([
+//                 {
+//                     type: 'list',
+//                     name: 'employee',
+//                     message: "Which employee's manager would you like to update?",
+//                     choices: employeesArray
+//                 },
 
-                {
-                    type: 'list',
-                    name: 'newManager',
-                    message: "Which employee do you want to set as manager?",
-                    choices: ['Sarah Peterson', 'Gao Xiong', 'Joe Lamb']
-                },
+//                 {
+//                     type: 'list',
+//                     name: 'newManager',
+//                     message: "Which employee do you want to set as manager?",
+//                     choices: ['Sarah Peterson', 'Gao Xiong', 'Joe Lamb']
+//                 },
 
-            ]).then(function (response) {
-                console.log("Updating employee role...\n");
-                connection.query(
-                    "UPDATE employee SET ? WHERE ?",
-                    //use employee ID for WHERE instead? pulled from mySQL statement. console names to user, use ID for where statement.
-                    [
-                        {
-                            manager: response.newManager
-                        },
-                        {
-                            first_name: response.employee
-                        },
-                        {
-                            last_name: response.employee
-                        }
-                    ],
-                    function (err, res) {
-                        if (err) throw err;
-                        console.log(res.affectedRows + "'s manager updated!\n");
-                    }
-                );
+//             ]).then(function (response) {
+//                 console.log("Updating employee role...\n");
+//                 connection.query(
+//                     "UPDATE employee SET ? WHERE ?",
+//                     //use employee ID for WHERE instead? pulled from mySQL statement. console names to user, use ID for where statement.
+//                     [
+//                         {
+//                             manager: response.newManager
+//                         },
+//                         {
+//                             first_name: response.employee
+//                         },
+//                         {
+//                             last_name: response.employee
+//                         }
+//                     ],
+//                     function (err, res) {
+//                         if (err) throw err;
+//                         console.log(res.affectedRows + "'s manager updated!\n");
+//                     }
+//                 );
 
-            })
-    }
-    )
-}
+//             })
+//     }
+//     )
+// }
 
 
 
