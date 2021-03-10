@@ -1,6 +1,7 @@
 const inquirer = require("inquirer");
 const employees = require("./employee-view");
 const connection = require("./connection");
+const cTable = require('console.table');
 // const main = require("./main");
 
 
@@ -130,19 +131,13 @@ function updateEmployeeRole() {
     // let sql = "SELECT first_name, last_name FROM employee";
   let sql = `SELECT CONCAT (first_name, " " , last_name) AS full_name FROM employee`
   let employeesArray = [];
-  // console.log("before connection", employeesArray)
   connection.query(sql, function(err, res) {
-  // console.log(res)
-  // console.log("after connection", employeesArray)
     if (err) throw err;
     // for each statement to list our each employee name
     res.forEach(employee => {
-      //   console.log("first employee", employee.full_name)
-      employeesArray.push(employee.full_name)
-      // console.log("after push", employeesArray)
+        employeesArray.push(employee.full_name)
   });
-  // console.log(employeesArray)
-  });
+  
     return inquirer
         .prompt([
             {
@@ -178,15 +173,25 @@ function updateEmployeeRole() {
                 function (err, res) {
                     if (err) throw err;
                     console.log(res.affectedRows + " employee role updated!\n");
-                    //main.init();
+            
                 }
             );
 
         })
-    }
+    });
+    } //end of updateEmployeeRole()
 
 
     function updateManager() {
+            // let sql = "SELECT first_name, last_name FROM employee";
+          let sql = `SELECT CONCAT (first_name, " " , last_name) AS full_name FROM employee`
+          let employeesArray = [];
+          connection.query(sql, function(err, res) {
+            if (err) throw err;
+            // for each statement to list our each employee name
+            res.forEach(employee => {
+                employeesArray.push(employee.full_name)
+          });
         // var employeeList = employees.getEmployees()
         return inquirer
             .prompt([
@@ -194,7 +199,7 @@ function updateEmployeeRole() {
                     type: 'list',
                     name: 'employee',
                     message: "Which employee's manager would you like to update?",
-                    choices: ['names of all employees from connection.query pulled using a msql statement? Use employees.getEmployees()?']
+                    choices: employeesArray
                 },
 
                 {
@@ -223,12 +228,13 @@ function updateEmployeeRole() {
                     function (err, res) {
                         if (err) throw err;
                         console.log(res.affectedRows + "'s manager updated!\n");
-                        //main.init();
                     }
                 );
     
             })
         }
+          )}
+
 
 module.exports = {
                 addEmployee,

@@ -1,4 +1,5 @@
 const connection = require("./connection");
+const cTable = require('console.table');
 
 //view all employees with sql, show results in a table
 function viewEmployees() {
@@ -6,6 +7,7 @@ function viewEmployees() {
   connection.query(sql, function(err, res) {
     if (err) throw err;
     console.table(res);
+    
   });
 }
 
