@@ -3,6 +3,8 @@ node_modules
 DS_Store
 .env
 assignmentdetails.md
+employee-view.js
+employee-controller.js
 
 # Logs
 logs
