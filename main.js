@@ -155,33 +155,6 @@ function addEmployee() {
 }
 
 
-// //Delete
-// function removeEmployee() {
-//     return inquirer
-//         .prompt([
-//             {
-//                 type: 'input',
-//                 name: 'deleteID',
-//                 message: "What is the ID of the employee that you would like to delete?",
-//             },
-
-//         ]).then(function (response) {
-//             console.log("Deleting employee...\n");
-//             connection.query(
-//                 "DELETE FROM employee WHERE ?",
-//                 {
-//                     id: response.deleteID
-//                 },
-//                 function (err, res) {
-//                     if (err) throw err;
-//                     console.log(res.affectedRows + " employee deleted!\n");
-//                 }
-//             );
-//             promptChoices();
-//         })
-// };
-
-
 //select department
 function selectDepartment() {
     return inquirer
@@ -290,14 +263,37 @@ function updateEmployeeRole() {
                 console.log("Updating employee role...\n");
                 //split the full name so we can access first name and last name individually
                 const name = response.selectEmployee.split(' ')  
+                var newRole = response.updateRole;
+                if (newRole == 'lead engineer'){
+                    newRole = 1;
+                }
+                else if (newRole == 'software engineer'){
+                    newRole = 2;
+                }
+                else if (newRole == 'accountant'){
+                    newRole = 3;
+                }
+                else if (newRole == 'sales lead'){
+                    newRole = 4;
+                }
+                else if (newRole == 'legal team aid'){
+                    newRole = 5;
+                }
+                else if  (newRole == 'lawyer'){
+                    newRole = 6;
+                }
+                else if (newRole == 'salesperson'){
+                    newRole = 7;
+                }
     
                 connection.query(
-                    "UPDATE employee INNER JOIN role on role.id = employee.role_id INNER JOIN department on department.id = role.department_id SET ? WHERE ? AND ?",
+                    // "UPDATE employee INNER JOIN role on role.id = employee.role_id INNER JOIN department on department.id = role.department_id SET ? WHERE ? AND ?",
+                    "UPDATE employee SET ? WHERE ? AND ?",
                     
                     
                     [
                         {
-                            title: response.updateRole
+                            role_id: newRole
                         },
                         {
                             first_name: name[0]
@@ -355,7 +351,7 @@ function updateManager() {
                     "UPDATE employee SET ? WHERE ? AND ?",
                     [
                         {
-                            manager: response.newManager
+                            manager: manager
                         },
                         {
                             first_name: name[0]
