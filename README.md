@@ -3,8 +3,6 @@
 ## Description 
 Manage a company's employee database from the command line. Built with mySQL, node.js and javascript.
 
-Published at: [heroku link here]
-
 ## Table of Contents
 
 * [Usage](#usage)
@@ -15,11 +13,11 @@ Published at: [heroku link here]
 
 Run "npm init", "npm i" then "npm start" from the command line. Navigate through the main prompt to view, add, update, or remove employees from the database.
 
-![Screenshot of app](jfkdls/jfkdsl.png)
+![Screenshot of app view table of employees](Assets/view-all.png)
 
 ## Credits
 
-Nathan Perfetti
+Nathan Perfetti <br>
 Chris Woolcott
 
 ## Copyright
