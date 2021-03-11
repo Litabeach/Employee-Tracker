@@ -93,7 +93,7 @@ function addEmployee() {
                 type: 'list',
                 name: 'role',
                 message: "What is the employees role?",
-                choices: ['lead engineer', 'software engineer', 'accountant', 'legal team aid', 'sales lead', 'lawyer', 'salesperson']
+                choices: ['lead engineer', 'software engineer', 'accountant', 'sales lead', 'lawyer', 'legal team aid', 'salesperson']
 
             },
 
@@ -121,10 +121,10 @@ function addEmployee() {
             else if (role == 'sales lead') {
                 role = 4;
             }
-            else if (role == 'lawyer') {
+            else if (role == 'legal team aid') {
                 role = 5;
             }
-            else if (role == 'legal team aid') {
+            else if (role == 'lawyer') {
                 role = 6;
             }
             else if (role == 'salesperson') {
@@ -212,7 +212,7 @@ function selectDepartment() {
 
 //Update employee role
 function updateEmployeeRole() {
-    let sql = `SELECT CONCAT (first_name, " " , last_name) AS full_name FROM employee`;
+    let sql = `SELECT CONCAT (id, " ", first_name, " " , last_name) AS full_name FROM employee`;
     let employeesArray = [];
     connection.query(sql, function (err, res) {
         if (err) throw err;
@@ -237,26 +237,26 @@ function updateEmployeeRole() {
                     type: 'list',
                     name: 'updateRole',
                     message: "What is their new role?",
-                    choices: ['lead engineer', 'software engineer', 'accountant', 'legal team aid', 'sales lead', 'lawyer', 'salesperson']
+                    choices: ['lead engineer', 'software engineer', 'accountant', 'sales lead', 'lawyer', 'legal team aid', 'salesperson']
                 },
 
             ]).then(function (response) {
                 console.log("Updating employee role...\n");
                 const name = response.selectEmployee.split(' ')  
-                console.log(name[0])
     
                 connection.query(
                     "UPDATE employee INNER JOIN role on role.id = employee.role_id INNER JOIN department on department.id = role.department_id SET ? WHERE ? AND ?",
+                    
                     
                     [
                         {
                             title: response.updateRole
                         },
                         {
-                            first_name: name[0]
+                            first_name: name[1]
                         },
                         {
-                            last_name: name[1]
+                            last_name: name[2]
                         },
                     ],
                     function (err, res) {
@@ -316,6 +316,7 @@ function updateManager() {
                         {
                             last_name: name[1]
                         }
+                        
                     ],
                     function (err, res) {
                         if (err) throw err;
