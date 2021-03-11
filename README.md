@@ -2,6 +2,7 @@
 
 ## Description 
 Manage a company's employee database from the command line. Built with mySQL, node.js and javascript.
+Demo video: https://www.youtube.com/watch?v=kmEBQTr9-Og
 
 ## Table of Contents
 

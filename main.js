@@ -154,32 +154,32 @@ function addEmployee() {
         })
 }
 
-//change the prompt to a list that includes current employees pulled from the database when I figure out how, see updaterole and update manager
-//Delete
-function removeEmployee() {
-    return inquirer
-        .prompt([
-            {
-                type: 'input',
-                name: 'deleteID',
-                message: "What is the ID of the employee that you would like to delete?",
-            },
 
-        ]).then(function (response) {
-            console.log("Deleting employee...\n");
-            connection.query(
-                "DELETE FROM employee WHERE ?",
-                {
-                    id: response.deleteID
-                },
-                function (err, res) {
-                    if (err) throw err;
-                    console.log(res.affectedRows + " employee deleted!\n");
-                }
-            );
-            promptChoices();
-        })
-};
+// //Delete
+// function removeEmployee() {
+//     return inquirer
+//         .prompt([
+//             {
+//                 type: 'input',
+//                 name: 'deleteID',
+//                 message: "What is the ID of the employee that you would like to delete?",
+//             },
+
+//         ]).then(function (response) {
+//             console.log("Deleting employee...\n");
+//             connection.query(
+//                 "DELETE FROM employee WHERE ?",
+//                 {
+//                     id: response.deleteID
+//                 },
+//                 function (err, res) {
+//                     if (err) throw err;
+//                     console.log(res.affectedRows + " employee deleted!\n");
+//                 }
+//             );
+//             promptChoices();
+//         })
+// };
 
 
 //select department
@@ -210,9 +210,55 @@ function selectDepartment() {
         })
 };
 
+function removeEmployee() {
+    let sql = `SELECT CONCAT (first_name, " " , last_name) AS full_name FROM employee`;
+    let employeesArray = [];
+    connection.query(sql, function (err, res) {
+        if (err) throw err;
+
+        // for each statement to list each employee name
+        res.forEach(employee => {
+            employeesArray.push(employee.full_name);
+        });
+
+        return inquirer
+            .prompt([
+                
+                {
+                    name: 'selectEmployee',
+                    type: 'list',
+                    message: "Which employee would you like to update?",
+                    choices: employeesArray,
+                },
+
+            ]).then(function (response) {
+                console.log("Deleting employee...\n");
+                //split the full name so we can access first name and last name individually
+                const name = response.selectEmployee.split(' ')  
+    
+                connection.query(
+                    "DELETE FROM employee WHERE ? AND ?",
+                    [
+                        {
+                            first_name: name[0]
+                        },
+                        {
+                            last_name: name[1]
+                        },
+                    ],
+                    function (err, res) {
+                        if (err) throw err;
+                        console.log(res.affectedRows + " employee deleted!\n");
+                        promptChoices();
+                    }
+                );
+            }) 
+    }); 
+} 
+
 //Update employee role
 function updateEmployeeRole() {
-    let sql = `SELECT CONCAT (id, " ", first_name, " " , last_name) AS full_name FROM employee`;
+    let sql = `SELECT CONCAT (first_name, " " , last_name) AS full_name FROM employee`;
     let employeesArray = [];
     connection.query(sql, function (err, res) {
         if (err) throw err;
@@ -242,6 +288,7 @@ function updateEmployeeRole() {
 
             ]).then(function (response) {
                 console.log("Updating employee role...\n");
+                //split the full name so we can access first name and last name individually
                 const name = response.selectEmployee.split(' ')  
     
                 connection.query(
@@ -253,10 +300,10 @@ function updateEmployeeRole() {
                             title: response.updateRole
                         },
                         {
-                            first_name: name[1]
+                            first_name: name[0]
                         },
                         {
-                            last_name: name[2]
+                            last_name: name[1]
                         },
                     ],
                     function (err, res) {
@@ -267,9 +314,9 @@ function updateEmployeeRole() {
                 );
             }) 
     }); 
-} //end of updateEmployeeRole()
+} 
 
-
+//Function to update the employee's manager 
 function updateManager() {
     let sql = `SELECT CONCAT (first_name, " " , last_name) AS full_name FROM employee`;
     let employeesArray = [];
@@ -330,9 +377,7 @@ function updateManager() {
     )
 }
 
-
 //Read (view) functions:
-
 //view all employees with sql, show results in a table
 function viewEmployees() {
     let sql = "SELECT employee.id, first_name, last_name, title, salary, department, manager FROM employees_db.employee INNER JOIN role on role.id = employee.role_id INNER JOIN department on department.id = role.department_id;";
