@@ -130,38 +130,59 @@ function addEmployee() {
                 function (err, res) {
                     if (err) throw err;
                     console.log(res.affectedRows + " employee inserted!\n");
+                    promptChoices();
                 }
             );
-            promptChoices();
         })
 }
 
-//change the prompt to a list that includes current employees pulled from the database when I figure out how, see updaterole and update manager
-//Delete
+//delete employee
 function removeEmployee() {
-    return inquirer
-        .prompt([
-            {
-                type: 'input',
-                name: 'deleteID',
-                message: "What is the ID of the employee that you would like to delete?",
-            },
+    let sql = `SELECT CONCAT (first_name, " " , last_name) AS full_name FROM employee`;
+    let employeesArray = [];
+    connection.query(sql, function (err, res) {
+        if (err) throw err;
 
-        ]).then(function (response) {
-            console.log("Deleting employee...\n");
-            connection.query(
-                "DELETE FROM employee WHERE ?",
+        // for each statement to list each employee name
+        res.forEach(employee => {
+            employeesArray.push(employee.full_name);
+        });
+
+
+        return inquirer
+            .prompt([
+                
                 {
-                    id: response.deleteID
+                    name: 'selectEmployee',
+                    type: 'list',
+                    message: "Which employee would you like to delete?",
+                    choices: employeesArray,
                 },
-                function (err, res) {
-                    if (err) throw err;
-                    console.log(res.affectedRows + " employee deleted!\n");
-                }
-            );
-            promptChoices();
-        })
-};
+
+            ]).then(function (response) {
+                console.log("Updating employee role...\n");
+                const name = response.selectEmployee.split(' ')  
+    
+                connection.query(
+                    "DELETE FROM employee WHERE ? AND ?",
+                    
+                    [
+                        {
+                            first_name: name[0]
+                        },
+                        {
+                            last_name: name[1]
+                        },
+                    ],
+                    function (err, res) {
+                        if (err) throw err;
+                        console.log(res.affectedRows + " employee(s) deleted!\n");
+                        promptChoices();
+                    }
+                );
+            }) 
+    }); 
+} 
 
 
 //select department
@@ -233,15 +254,14 @@ function updateEmployeeRole() {
             ]).then(function (response) {
                 console.log("Updating employee role...\n");
                 const name = response.selectEmployee.split(' ')  
-                console.log(name[0])
-    
+                // INNER JOIN department on department.id = role.department_id 
                 connection.query(
-                    "UPDATE employee INNER JOIN role on role.id = employee.role_id INNER JOIN department on department.id = role.department_id SET ?, ? WHERE ? AND ?",
+                    "UPDATE employee, role INNER JOIN role on role.id = employee.role_id INNER JOIN department on department.id = role.department_id  SET ?, ? WHERE ? AND ? ",
                     
                     [
-                        {
-                            department : response.department
-                        },
+                        // {
+                        //     department : response.department
+                        // },
                         {
                             title: response.updateRole
                         },
