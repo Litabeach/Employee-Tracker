@@ -229,6 +229,7 @@ function removeEmployee() {
     }); 
 } 
 
+
 //Update employee role
 function updateEmployeeRole() {
     let sql = `SELECT CONCAT (first_name, " " , last_name) AS full_name FROM employee`;
@@ -287,10 +288,7 @@ function updateEmployeeRole() {
                 }
     
                 connection.query(
-                    // "UPDATE employee INNER JOIN role on role.id = employee.role_id INNER JOIN department on department.id = role.department_id SET ? WHERE ? AND ?",
                     "UPDATE employee SET ? WHERE ? AND ?",
-                    
-                    
                     [
                         {
                             role_id: newRole
