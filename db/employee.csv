@@ -1,0 +1,11 @@
+id,first_name,last_name,role_id,manager
+1,Sarah,Peterson,6,null
+2,Joe,Lamb,4,NULL
+4,Jorge,Gonzalez,2,"Gao Xiong"
+5,Gao,Xiong,1,NULL
+6,Shanice,Jones,3,none
+7,Jerry,Johnson,7,"Joe Lamb"
+30,Walter,Smith,3,NULL
+42,Ella,Fitz,2,"Gao Xiong"
+43,Paul,Lagos,7,"Joe Lamb"
+48,Maria,Quito,6,NULL
