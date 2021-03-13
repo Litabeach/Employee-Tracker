@@ -12,7 +12,7 @@ Demo video: https://www.youtube.com/watch?v=CjWtpYrQLNM
 
 ## Usage 
 
-Run "npm init", "npm i" then "npm start" from the command line. Navigate through the main prompt to view, add, update, or remove employees from the database.
+Run "npm init", "npm i" then "npm start" from the command line. Update your credentials for mySQL in the connection.js file. Navigate through the main prompt to view, add, update, or remove employees from the database.
 
 ![Screenshot of app view table of employees](Assets/view-all.png)
 
